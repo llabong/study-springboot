@@ -38,4 +38,15 @@ public class UserController {
             return ResponseEntity.ok(user);
         }
     }
+
+    @PutMapping("/{id}")
+    public String updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        return userService. deleteUser(id);
+    }
+
 }
