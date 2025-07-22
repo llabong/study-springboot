@@ -4,6 +4,7 @@ import com.example.study.dto.ProductMessageResponseDto;
 import com.example.study.dto.ProductRequestDto;
 import com.example.study.dto.ProductResponseDto;
 import com.example.study.entity.Product;
+import com.example.study.exception.ProductNotFoundException;
 import com.example.study.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class ProductService {
 //     하나의 상품 조회
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("해당 상품이 없습니다."));
+                .orElseThrow(() -> new ProductNotFoundException("해당 상품이 없습니다."));
     }
 
 //     모든 상품 조회
@@ -50,7 +51,7 @@ public class ProductService {
 
             return new ProductMessageResponseDto("상품이 수정되었습니다.");
         } else {
-            throw new IllegalArgumentException("해당 상품이 없습니다.");
+            throw new ProductNotFoundException("해당 상품이 없습니다.");
         }
     }
 
@@ -62,7 +63,7 @@ public class ProductService {
 
             return new ProductMessageResponseDto("상품이 삭제되었습니다.");
         } else {
-            throw new IllegalArgumentException("해당 상품이 없습니다.");
+            throw new ProductNotFoundException("해당 상품이 없습니다.");
         }
     }
 }
