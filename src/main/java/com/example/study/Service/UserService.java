@@ -5,16 +5,12 @@ import com.example.study.dto.UserResponseDto;
 import com.example.study.entity.User;
 import com.example.study.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -35,6 +31,7 @@ public class UserService {
         user.setAge(requestDto.getAge());
 
         User savedUser = userRepository.save(user);
+
         return new UserResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getAge());
     }
 
@@ -47,7 +44,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("해당 ID의 사용자가 없습니다."));
     }
 
-    public String updateUser(@RequestParam Long id, @RequestBody User user) {
+    public String updateUser(Long id, User user) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
@@ -60,7 +57,7 @@ public class UserService {
         }
     }
 
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             userRepository.deleteById(id);
