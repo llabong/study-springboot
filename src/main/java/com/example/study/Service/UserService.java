@@ -1,5 +1,7 @@
 package com.example.study.Service;
 
+import com.example.study.dto.UserRequestDto;
+import com.example.study.dto.UserResponseDto;
 import com.example.study.entity.User;
 import com.example.study.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String createUser(@RequestBody User user) {
-        userRepository.save(user);
-        return String.format("사용자 %s 저장 완료!", user.getName());
+//    public String createUser(@RequestBody User user) {
+//        userRepository.save(user);
+//        return String.format("사용자 %s 저장 완료!", user.getName());
+//    }
+    public UserResponseDto createUser(UserRequestDto requestDto) {
+        User user = new User();
+        user.setName(requestDto.getName());
+        user.setAge(requestDto.getAge());
+
+        User savedUser = userRepository.save(user);
+        return new UserResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getAge());
     }
 
     public List<User> getAllUser() {

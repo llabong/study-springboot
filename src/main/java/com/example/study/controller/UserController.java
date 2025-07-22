@@ -1,6 +1,8 @@
 package com.example.study.controller;
 
 import com.example.study.Service.UserService;
+import com.example.study.dto.UserRequestDto;
+import com.example.study.dto.UserResponseDto;
 import com.example.study.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,13 @@ public class UserController {
     private Map<Integer, User> userStore = new HashMap<> ();
     private AtomicInteger idGenerator = new AtomicInteger ();
 
+//    @PostMapping
+//    public String createUser(@RequestBody User user) {
+//        return userService.createUser(user);
+//    }
     @PostMapping
-    public String createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public UserResponseDto createUser(@RequestBody UserRequestDto requestDto) {
+        return userService.createUser(requestDto);
     }
 
     @GetMapping("/{id}")
